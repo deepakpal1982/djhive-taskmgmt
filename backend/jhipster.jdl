@@ -1,0 +1,30 @@
+
+application {
+  config {
+    baseName cpqApp
+    applicationType monolith
+    packageName com.adiops.cpq
+    authenticationType jwt
+    prodDatabaseType mysql
+    clientFramework react
+    buildTool gradle
+  }
+  entities *
+}
+
+entity Task {
+  title String required
+	description String
+ 	priority Integer
+ 	complete ZonedDateTime
+}
+entity Project {
+  name String required
+	description String
+}
+relationship ManyToOne {
+  Project{user(login)} to User , Task{user(login)} to User , Task{project(name)} to Project{tasks(title)}
+}
+dto * with mapstruct
+service * with serviceClass
+paginate Project, Task with pagination
